@@ -1,0 +1,7 @@
+# Dependencies are installed separately inside each service folder.
+node_modules/
+
+# Local logs and operating-system noise should not be committed.
+logs/
+*.log
+.DS_Store

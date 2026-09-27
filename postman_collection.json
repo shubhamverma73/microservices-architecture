@@ -1,0 +1,248 @@
+{
+  "info": {
+    "name": "Node.js Microservices Learning Project",
+    "description": "Postman collection for testing the API Gateway, User Service, Product Service, and Order Service learning project.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gatewayUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "userId",
+      "value": "replace-with-created-user-id"
+    },
+    {
+      "key": "productId",
+      "value": "replace-with-created-product-id"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Asha Sharma\",\n  \"email\": \"asha@example.com\",\n  \"phone\": \"9876543210\"\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/users",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "description": "Expected response: 201 Created with the new user in data. Copy data._id into the userId collection variable."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gatewayUrl}}/api/users",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "description": "Expected response: 200 OK with an array of users."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Notebook\",\n  \"price\": 50,\n  \"quantity\": 100\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/products",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        },
+        "description": "Expected response: 201 Created with the new product in data. Copy data._id into the productId collection variable."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gatewayUrl}}/api/products",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        },
+        "description": "Expected response: 200 OK with an array of products."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/orders",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "orders"
+          ]
+        },
+        "description": "Expected response: 201 Created with totalPrice equal to product price multiplied by quantity."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Orders",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gatewayUrl}}/api/orders",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "orders"
+          ]
+        },
+        "description": "Expected response: 200 OK with an array of orders."
+      },
+      "response": []
+    },
+    {
+      "name": "Error - Invalid User Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Bad Email Example\",\n  \"email\": \"not-an-email\"\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/users",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "description": "Expected response: 400 Bad Request because email is invalid."
+      },
+      "response": []
+    },
+    {
+      "name": "Error - Missing Product Name",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"price\": 50,\n  \"quantity\": 10\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/products",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        },
+        "description": "Expected response: 400 Bad Request because name is required."
+      },
+      "response": []
+    },
+    {
+      "name": "Error - Unknown User In Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"000000000000000000000000\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 1\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/api/orders",
+          "host": [
+            "{{gatewayUrl}}"
+          ],
+          "path": [
+            "api",
+            "orders"
+          ]
+        },
+        "description": "Expected response: 404 Not Found because Order Service cannot verify the user."
+      },
+      "response": []
+    }
+  ]
+}
